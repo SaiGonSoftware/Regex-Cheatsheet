@@ -97,3 +97,32 @@
 | \b  | 	Word boundary .NET, Java, Python 3, Ruby: position where one side only is a Unicode letter, digit or underscore  | Bob.*\b\кошка\b	  | Bob ate the кошка  |
 | \B	|  	Not a word boundary | c.*\Bcat\B.*	|copycats |
 
+## POSIX Classes
+| Character  | Legend  | Example  | Sample Match  |
+| ------------ | ------------ | ------------ | ------------ |
+| [:alpha:]   | PCRE (C, PHP, R…): ASCII letters A-Z and a-z  | [8[:alpha:]]+	  | WellDone88  |
+| [:alpha:]  | Ruby 2: Unicode letter or ideogram	  | [[:alpha:]\d]+	  | кошка99  |
+| [:alnum:]	 | PCRE (C, PHP, R…): ASCII digits and letters A-Z and a-z	  | [[:alnum:]]{10}	  |  ABCDE12345 |
+| [:alnum:]	  |  Ruby 2: Unicode digit, letter or ideogram	 | [[:alnum:]]{10}	  | кошка90210  |
+|  [:punct:]	 | PCRE (C, PHP, R…): ASCII punctuation mark	  | [[:punct:]]+	  | ?!.,:;  |
+| [:punct:]	  | Ruby: Unicode punctuation mark	  | [[:punct:]]+	  |  ‽,:〽⁆ |
+
+## Inline Modifiers
+| Character  | Legend  | Example  | Sample Match  |
+| ------------ | ------------ | ------------ | ------------ |
+| (?i)   | 	Case-insensitive mode (except JavaScript) |(?i)Monday	 |  monDAY |
+| (?s)   | 	DOTALL mode (except JS and Ruby). The dot (.) matches new line characters (\r\n). Also known as "single-line mode" because the dot treats the entire input as a single line | (?s)From A.*to Z	 |  	From A to Z |
+| (?m) | 	Multiline mode (except Ruby and JS) ^ and $ match at the beginning and end of every line | (?m)1\r\n^2$\r\n^3$	 |  1<br>2 <br>3 |
+| (?m)  |  In Ruby: the same as (?s) in other engines, i.e. DOTALL mode, i.e. dot matches line breaks| (?m)From A.*to Z	| From A to Z  |
+| (?x)   | 	Free-Spacing Mode mode (except JavaScript). Also known as comment mode or whitespace mode ||   |
+| (?n)   | 	.NET, PCRE 10.30+: named capture only | Turns all (parentheses) into non-capture groups. To capture, use named groups.	 |   |
+| (?d)  | 	Java: Unix linebreaks only |The dot and the ^ and $ anchors are only affected by \n	 |   |
+| (?^)  | PCRE 10.32+: unset modifiers |Unsets ismnx modifiers	 |   |
+
+## Lookarounds
+| Character  | Legend  | Example  | Sample Match  |
+| ------------ | ------------ | ------------ | ------------ |
+|(?=…)   | Positive lookahead |(?=\d{10})\d{5}	| 01234 in 0123456789 |
+| (?<=…)   | Positive lookbehind |(?<=\d)cat	 |  cat in 1cat|
+| (?!…)	  | Negative lookahead | (?!theatre)the\w+	 | theme|
+| (?<!…) | Negative lookbehind |\w{3}(?<!mon)ster	 | Munster  |
